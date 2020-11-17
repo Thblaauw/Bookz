@@ -21,7 +21,7 @@ private var etEmail: EditText? = null
 private var etPassword: EditText? = null
 private var btnCreateAccount: Button? = null
 private var mProgressBar: ProgressDialog? = null
-
+private var etSchool: EditText?=null
 private var mDatabaseReference: DatabaseReference? = null
 private var mDatabase: FirebaseDatabase? = null
 private var mAuth: FirebaseAuth? = null
@@ -32,7 +32,7 @@ private var firstName: String? = null
 private var lastName: String? = null
 private var email: String? = null
 private var password: String? = null
-
+private var school:String? = null
 class CreateAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +45,7 @@ class CreateAccountActivity : AppCompatActivity() {
         etLastName = findViewById<View>(R.id.et_last_name) as EditText
         etEmail = findViewById<View>(R.id.et_email) as EditText
         etPassword = findViewById<View>(R.id.et_password) as EditText
+        etSchool = findViewById<View>(R.id.et_school) as EditText
         btnCreateAccount = findViewById<View>(R.id.btn_register) as Button
         mProgressBar = ProgressDialog(this)
         mDatabase = FirebaseDatabase.getInstance()
@@ -58,8 +59,9 @@ class CreateAccountActivity : AppCompatActivity() {
         lastName = etLastName?.text.toString()
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
+        school= etSchool?.text.toString()
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
-            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
+            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)&& !TextUtils.isEmpty(school)
         ) {
             mProgressBar!!.setMessage("Registering User...")
             mProgressBar!!.show()
@@ -80,6 +82,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     val currentUserDb = mDatabaseReference!!.child(userId)
                     currentUserDb.child("firstName").setValue(firstName)
                     currentUserDb.child("lastName").setValue(lastName)
+                    currentUserDb.child("schoolName").setValue(school)
                     updateUserInfoAndUI()
                 } else {
                     // If sign in fails, display a message to the user.
