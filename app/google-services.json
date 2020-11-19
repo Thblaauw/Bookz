@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "453778219032",
+    "firebase_url": "https://book-zone-70940.firebaseio.com",
+    "project_id": "book-zone-70940",
+    "storage_bucket": "book-zone-70940.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453778219032:android:ea12561b6d04f94904636d",
+        "android_client_info": {
+          "package_name": "com.bignerdranch.android.bookz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453778219032-ls57n580td0msuh2j3tni3nmqk9efgk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVHLs74Kwmw8je7KZJk9iGEILwhW7rU-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453778219032-ls57n580td0msuh2j3tni3nmqk9efgk7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
