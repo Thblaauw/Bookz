@@ -15,4 +15,9 @@
     <string name="user_email">User Email :</string>
     <string name="picture">profile picture</string>
     <string name="school">School</string>
+    <string name="profileNav">My Profile</string>
+    <string name="homeNav">Home</string>
+    <string name="messagesNav">Messages</string>
+    <string name="profilePicture">Change Profile Picture</string>
+    <string name="logout_title">Logout</string>
 </resources>
