@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initialise()
+        //initialise()
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
     }
-    private fun initialise() {
+    /*private fun initialise() {
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference!!.child("Users")
         mAuth = FirebaseAuth.getInstance()
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         tvSchool = findViewById<View>(R.id.tv_school_name) as TextView
         tvEmail = findViewById<View>(R.id.tv_email) as TextView
         tvEmailVerifiied = findViewById<View>(R.id.tv_email_verifiied) as TextView
-    }
+    } */
     override fun onStart() {
         super.onStart()
         val mUser: FirebaseUser? = mAuth!!.currentUser
