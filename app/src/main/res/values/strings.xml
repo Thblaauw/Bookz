@@ -19,4 +19,9 @@
     <string name="book_condition_label">New book</string>
 
     <string name="submit_button">Submit book to Bookz</string>
+
+    <string name="new_post">New Post</string>
+
+    <string name="search">Search</string>
+    <string name="clear_search">Clear Search</string>
 </resources>

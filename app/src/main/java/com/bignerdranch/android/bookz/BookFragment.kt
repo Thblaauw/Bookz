@@ -11,7 +11,10 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import java.util.*
 
+private const val TAG = "BookFragment"
+private const val ARG_BOOK_ID = "book_id"
 class BookFragment : Fragment() {
 
     private lateinit var book: Book
@@ -30,6 +33,9 @@ class BookFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         book = Book()
+        val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
+        Log.d(TAG, "args bundle crime ID: $bookId")
+// Eventually, load crime from database
     }
 
     override fun onCreateView(
@@ -101,6 +107,17 @@ class BookFragment : Fragment() {
         conditionBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 book.condition = isChecked
+            }
+        }
+    }
+
+    companion object {
+        fun newInstance(bookId: UUID): BookFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_BOOK_ID, bookId)
+            }
+            return BookFragment().apply {
+                arguments = args
             }
         }
     }
