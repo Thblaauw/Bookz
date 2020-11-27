@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!---home navigaton -->
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/homeNav" />
+    <!---messages navigaton -->
+    <item
+        android:id="@+id/navigation_messages"
+        android:icon="@drawable/ic_baseline_message_24"
+        android:title="@string/messagesNav" />
+    <!---Profile navigaton -->
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/profileNav" />
+</menu>
