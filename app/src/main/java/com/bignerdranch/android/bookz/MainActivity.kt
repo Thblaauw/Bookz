@@ -1,8 +1,10 @@
 package com.bignerdranch.android.bookz
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,8 +14,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_profile.*
+var logoutButton: Button? = null
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,6 +32,11 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home, R.id.navigation_messages, R.id.navigation_profile))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
 
+    fun logoutUser(view: View) {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        finish()
     }
 }
