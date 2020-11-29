@@ -33,7 +33,6 @@ class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     var databaseReference :  DatabaseReference? = null
     var database: FirebaseDatabase? = null
-    var firebaseUser: FirebaseUser? = null
     var refUsers: DatabaseReference? = null
 
     override fun onCreateView(
