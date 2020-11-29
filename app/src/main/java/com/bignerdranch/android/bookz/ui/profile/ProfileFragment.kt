@@ -1,32 +1,29 @@
 package com.bignerdranch.android.bookz.ui.profile
 
-import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bignerdranch.android.bookz.LoginActivity
-import com.bignerdranch.android.bookz.MainActivity
+import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 class ProfileFragment : Fragment() {
 
     private lateinit var profileViewModel: ProfileViewModel
+    private var imageUri: Uri? = null
 
     private val currentUser = FirebaseAuth.getInstance().currentUser
     var selectedPhotoUri: Uri?= null
@@ -57,18 +54,36 @@ class ProfileFragment : Fragment() {
     fun loadProfile() {
         val user = auth.currentUser
         val userreference = databaseReference?.child(user?.uid!!)
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("Users/$uid/")
+        val userInfo = Users()
+
         userreference?.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                userInfo.setFirstName(snapshot.child("firstName").value.toString())
+                userInfo.setLastName(snapshot.child("lastName").value.toString())
+                userInfo.setSchoolName(snapshot.child("schoolName").value.toString())
+                FirebaseAuth.getInstance().uid?.let { userInfo.setUID(it) }
+                userInfo.setProfilePicture(snapshot.child("profilePicture").value.toString())
 
-                text_full_name.text = snapshot.child("firstName").value.toString() + " " + snapshot.child("lastName").value.toString()
-                text_school.text = snapshot.child("schoolName").value.toString()
+                Picasso.get().load(userInfo.getProfilePicture()).into(profile_picture)
+
+                text_full_name.text = userInfo.getFirstName() + " " + userInfo.getLastName()
+                text_school.text = userInfo.getSchoolName()
                 text_email.text = user?.email
+
+                ref.setValue(userInfo)
+
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                FirebaseAuth.getInstance().signOut()
             }
         })
     }
 
+
 }
+
+
+

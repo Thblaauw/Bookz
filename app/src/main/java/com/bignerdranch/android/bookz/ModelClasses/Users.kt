@@ -1,5 +1,7 @@
 package com.bignerdranch.android.bookz.ModelClasses
 
+import com.google.firebase.database.DataSnapshot
+
 class Users {
     private var uid: String = ""
     private var profilePicture: String = ""
@@ -23,6 +25,7 @@ class Users {
         this.lastName = lastName
         this.schoolName = schoolName
     }
+
 
     fun getUID(): String?{
         return uid

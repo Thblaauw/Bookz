@@ -1,44 +1,30 @@
 package com.bignerdranch.android.bookz
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bignerdranch.android.bookz.ModelClasses.Users
-import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.StorageTask
-import com.google.android.gms.tasks.Continuation
-import com.google.firebase.storage.UploadTask
-import kotlinx.android.synthetic.main.activity_create_account.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
-    private val RequestCode = 438;
     private var imageUri: Uri? = null
-    private var storageRef: StorageReference? = null
-    var firebaseUser: FirebaseUser? = null
-    var userReference: DatabaseReference? = null
+    var databaseReference: DatabaseReference? = null
+    var database: FirebaseDatabase? = null
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +35,17 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_messages, R.id.navigation_profile))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_profile
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        /*firebaseUser = FirebaseAuth.getInstance().currentUser
-        userReference = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser?.uid)
-        storageRef = FirebaseStorage.getInstance().reference.child("Users")*/
+        database = FirebaseDatabase.getInstance()
+        databaseReference = database?.reference!!.child("Users")
+        auth = FirebaseAuth.getInstance()
     }
 
     fun logoutUser(view: View) {
@@ -71,16 +60,17 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, 0)
     }
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null ) {
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             imageUri = data.data
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
 
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            profile_picture.setBackgroundDrawable(bitmapDrawable)
+            profile_picture.setImageBitmap(bitmap)
 
             uploadImageToFirebase()
         }
@@ -93,9 +83,14 @@ class MainActivity : AppCompatActivity() {
         ref.putFile(imageUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
-                    it.toString()
+                    saveImageToDatabase(it.toString())
                 }
             }
     }
 
+    private fun saveImageToDatabase(profilePicture: String) {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("Users/$uid/profilePicture")
+        ref.setValue(profilePicture)
+    }
 }
