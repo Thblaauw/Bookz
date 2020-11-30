@@ -1,12 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bignerdranch.android.bookz.MessagesFragment">
+    tools:context=".ui.messages.MessagesFragment">
 
-    <RecyclerView
-        android:id="@+id/recycler_view_people"
+    <TextView
+        android:id="@+id/text_messages"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

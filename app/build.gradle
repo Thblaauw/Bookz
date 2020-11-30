@@ -27,9 +27,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = '1.8'
     }
 }
 
@@ -41,6 +40,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -53,7 +53,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-firestore:16.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
-    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.firebaseui:firebase-ui-storage:3.3.1'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
@@ -70,6 +71,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
     kotlin {
         experimental {
