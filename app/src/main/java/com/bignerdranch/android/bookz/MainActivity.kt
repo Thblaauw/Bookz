@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
         setContentView(R.layout.activity_main)
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        /*
         if (currentFragment == null) {
             val fragment = BookListFragment.newInstance()
             supportFragmentManager
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
                 .add(R.id.fragment_container, fragment)
                 .commit()
         }
-
+        */
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
