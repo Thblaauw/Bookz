@@ -106,7 +106,13 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
         ref.setValue(profilePicture)
     }
 
-    override fun onBookSelected(crimeId: UUID) {
-        TODO("Not yet implemented")
+    override fun onBookSelected(bookId: UUID) {
+        val fragment = BookFragment.newInstance(bookId)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+
     }
 }
