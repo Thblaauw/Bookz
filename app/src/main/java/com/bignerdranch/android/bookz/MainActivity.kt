@@ -105,4 +105,8 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
         val ref = FirebaseDatabase.getInstance().getReference("Users/$uid/profilePicture")
         ref.setValue(profilePicture)
     }
+
+    override fun onBookSelected(crimeId: UUID) {
+        TODO("Not yet implemented")
+    }
 }
