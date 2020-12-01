@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
     }
 
     override fun onBookSelected(bookId: UUID) {
-        /*
         val fragment = BookFragment.newInstance(bookId)
         supportFragmentManager
             .beginTransaction()
@@ -116,7 +115,5 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
             .addToBackStack(null)
             .commit()
 
-         */
-        Log.d("F1", "On Main")
     }
 }

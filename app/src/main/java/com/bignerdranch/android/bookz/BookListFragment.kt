@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bignerdranch.android.bookz.ui.home.HomeFragment
 import java.util.*
 
 private const val TAG = "BookListFragment"
@@ -22,9 +21,7 @@ class BookListFragment : Fragment() {
     interface Callbacks {
         fun onBookSelected(crimeId: UUID)
     }
-
     private var callbacks: Callbacks? = null
-    private var parentFrag: HomeFragment? = null
 
     private lateinit var bookRecyclerView: RecyclerView
     private var adapter: BookAdapter? = null
@@ -36,14 +33,12 @@ class BookListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        parentFrag = this@BookListFragment.getParentFragment() as HomeFragment
-        //callbacks = context as Callbacks?
+        callbacks = context as Callbacks?
     }
 
     override fun onDetach() {
         super.onDetach()
-        val parentFrag: HomeFragment? = null
-        //callbacks = null
+        callbacks = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
@@ -74,7 +69,7 @@ class BookListFragment : Fragment() {
             R.id.new_post -> {
                 val book = Book()
                 bookListViewModel.addBook(book)
-                parentFrag?.onBookSelected(book.id)
+                callbacks?.onBookSelected(book.id)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -126,7 +121,7 @@ class BookListFragment : Fragment() {
             priceTextView.text = this.book.price
         }
         override fun onClick(v: View) {
-            parentFrag?.onBookSelected(book.id)        }
+            callbacks?.onBookSelected(book.id)        }
     }
 
     private inner class BookAdapter(var books: List<Book>)
