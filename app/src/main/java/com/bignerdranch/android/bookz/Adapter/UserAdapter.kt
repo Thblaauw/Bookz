@@ -1,15 +1,59 @@
 package com.bignerdranch.android.bookz.Adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
+import com.bignerdranch.android.bookz.R.id.*
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class UserAdapter(
     mContext: Context,
     mUsers: List<Users>,
     isChatCheck: Boolean
-    )
+    ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
+
+    private val mContext: Context
+    private val mUsers: List<Users>
+    private var isChatCheck: Boolean
+
+    init {
+        this.mUsers = mUsers
+        this.mContext = mContext
+        this.isChatCheck = isChatCheck
+    }
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+        val view: View = LayoutInflater.from(mContext).inflate(R.layout.search_user, viewGroup, false)
+        return UserAdapter.ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, i: Int) {
+        val user: Users = mUsers[i]
+        holder.userNameText.text = user!!.getFirstName()
+        //Picasso.get().load(user.getProfilePicture()).placeholder(R.drawable.ic_baseline_account_circle_24).into(holder.profileImageView)
+    }
+
+    override fun getItemCount(): Int {
+        return mUsers.size
+    }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var userNameText: TextView
+        var profileImageView: CircleImageView
+        var lastMessageText: TextView
+
+        init {
+            userNameText = itemView.findViewById(R.id.username)
+            profileImageView = itemView.findViewById(R.id.profile_pic_bar)
+            lastMessageText = itemView.findViewById(R.id.message_last)
+        }
+
+    }
+
+}

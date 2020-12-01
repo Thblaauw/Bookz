@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/navigation_users"
         android:name="com.bignerdranch.android.bookz.ui.users.UsersFragment"
-        android:label="@string/messagesNav"
+        android:label="@string/usersNav"
         tools:layout="@layout/fragment_users" />
 
     <fragment
