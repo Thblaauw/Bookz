@@ -51,7 +51,7 @@ class MessageChatActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid
 
 
-        val reference = FirebaseDatabase.getInstance().reference.child("Users/$uid").child(userIdVisit)
+        val reference = FirebaseDatabase.getInstance().reference.child("Users/").child(userIdVisit)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val user: Users? = p0.getValue(Users::class.java)
@@ -59,7 +59,7 @@ class MessageChatActivity : AppCompatActivity() {
                 username_chat.text = user!!.getFirstName() + " " + user!!.getLastName()
                 //Picasso.get().load(user.getProfilePicture()).into(profile_image_chat)
 
-                retrieveMessages(firebaseUser!!.uid, userIdVisit, user.getProfilePicture())
+                retrieveMessages(firebaseUser!!.uid, userIdVisit, user!!.getProfilePicture())
 
             }
 
