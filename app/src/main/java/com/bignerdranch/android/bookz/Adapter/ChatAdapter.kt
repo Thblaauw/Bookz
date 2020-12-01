@@ -58,13 +58,13 @@ class ChatAdapter(
         if(chat.getMessage().equals("Attachment: Image") && !chat.getUrl().equals("")) {
             if(chat.getSender().equals(fireBaseUser!!.uid)) {
                 holder.show_message!!.visibility = View.GONE
-                holder.imageview_right!!.visibility = View.GONE
+                holder.imageview_right!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.getUrl()).into(holder.imageview_right)
             }
 
             else if(!chat.getSender().equals(fireBaseUser!!.uid)) {
                 holder.show_message!!.visibility = View.GONE
-                holder.imageview_left!!.visibility = View.GONE
+                holder.imageview_left!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.getUrl()).into(holder.imageview_left)
             }
         }

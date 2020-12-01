@@ -48,8 +48,10 @@ class MessageChatActivity : AppCompatActivity() {
         linearLayoutManager.stackFromEnd = true
         recyclerview_chats.layoutManager = linearLayoutManager
 
+        val uid = FirebaseAuth.getInstance().uid
 
-        val reference = FirebaseDatabase.getInstance().reference.child("Users").child(userIdVisit)
+
+        val reference = FirebaseDatabase.getInstance().reference.child("Users/$uid").child(userIdVisit)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val user: Users? = p0.getValue(Users::class.java)
