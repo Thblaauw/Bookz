@@ -1,6 +1,7 @@
 package com.bignerdranch.android.bookz.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bignerdranch.android.bookz.BookFragment
 import com.bignerdranch.android.bookz.BookListFragment
 import com.bignerdranch.android.bookz.R
+import java.util.*
 
 class HomeFragment : Fragment() {
 
