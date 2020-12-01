@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_users, R.id.navigation_profile
+                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
     }
 
     override fun onBookSelected(bookId: UUID) {
+        /*
         val fragment = BookFragment.newInstance(bookId)
         supportFragmentManager
             .beginTransaction()
@@ -115,5 +116,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
             .addToBackStack(null)
             .commit()
 
+         */
+        Log.d("F1", "On Main")
     }
 }
