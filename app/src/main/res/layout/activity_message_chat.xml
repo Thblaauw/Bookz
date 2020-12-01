@@ -5,18 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e6e6e6"
     tools:context=".MessageChatActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/layout_chat_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_message_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimaryDark">
+            android:background="?attr/colorPrimaryDark"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
             
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image_chat"
@@ -45,14 +48,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_chat_bar"
+        android:layout_above="@id/relative_bottom_layout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="60dp"
         android:background="#fff">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relative_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="6dp"
         android:layout_alignParentBottom="true">
 
@@ -60,13 +68,9 @@
             android:id="@+id/btn_image_attachment"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_attachment_24"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginBottom="0dp"
-            android:background="@drawable/ic_baseline_attachment_24">
+            android:layout_alignParentLeft="true">
 
         </ImageView>
 
@@ -77,14 +81,16 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginEnd="22dp"
-            android:layout_marginBottom="14dp"
             android:layout_toRightOf="@id/btn_image_attachment"
             android:background="@android:color/transparent"
             android:hint="Message"
-            android:layout_marginRight="6dp"
-            android:layout_marginStart="6dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp">
+
         </EditText>
 
         <ImageView
@@ -94,15 +100,16 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="367dp"
-            android:layout_marginLeft="367dp"
-            android:layout_marginBottom="7dp"
-            android:background="@drawable/ic_baseline_send_24">
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_baseline_send_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </ImageView>
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </RelativeLayout>
