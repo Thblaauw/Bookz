@@ -20,7 +20,9 @@ class BookListFragment : Fragment() {
      * Required interface for hosting activities
      */
     interface Callbacks {
-        fun onBookSelected(crimeId: UUID)
+        //fun onBookSelected(crimeId: UUID)
+        fun onBookSelected(bookId: Book)
+        fun onAddBookSelected()
     }
 
     private var callbacks: Callbacks? = null
@@ -74,7 +76,8 @@ class BookListFragment : Fragment() {
             R.id.new_post -> {
                 val book = Book()
                 bookListViewModel.addBook(book)
-                parentFrag?.onBookSelected(book.id)
+                //parentFrag?.onBookSelected(book.id)
+                parentFrag?.onAddBookSelected()
                 true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -126,7 +129,7 @@ class BookListFragment : Fragment() {
             priceTextView.text = this.book.price
         }
         override fun onClick(v: View) {
-            parentFrag?.onBookSelected(book.id)        }
+            parentFrag?.onBookSelected(book)        }
     }
 
     private inner class BookAdapter(var books: List<Book>)

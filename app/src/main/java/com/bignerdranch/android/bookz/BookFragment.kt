@@ -33,8 +33,8 @@ class BookFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         book = Book()
-        val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
-        Log.d(TAG, "args bundle crime ID: $bookId")
+        //val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
+        //Log.d(TAG, "args bundle book ID: $bookId")
 // Eventually, load crime from database
     }
 
@@ -56,7 +56,7 @@ class BookFragment : Fragment() {
         submitButton = view.findViewById(R.id.submit_button) as Button
         submitButton.apply {
             text ="Submit"
-            isEnabled = false
+            isEnabled = true
         }
 
         conditionBox = view.findViewById(R.id.book_condition) as CheckBox
@@ -103,7 +103,6 @@ class BookFragment : Fragment() {
         isbnField.addTextChangedListener(genericTextWatcher)
         detailsField.addTextChangedListener(genericTextWatcher)
 
-
         conditionBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 book.condition = isChecked
@@ -112,13 +111,13 @@ class BookFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(bookId: UUID): BookFragment {
-            val args = Bundle().apply {
-                putSerializable(ARG_BOOK_ID, bookId)
-            }
-            return BookFragment().apply {
-                arguments = args
-            }
+        fun newInstance(): BookFragment {
+            //val args = Bundle().apply {
+                //putSerializable(ARG_BOOK_ID, bookId)
+          //  }
+            return BookFragment()//.apply {
+                //arguments = args
+            //}
         }
     }
 }

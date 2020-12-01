@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bignerdranch.android.bookz.BookFragment
-import com.bignerdranch.android.bookz.BookListFragment
-import com.bignerdranch.android.bookz.R
+import com.bignerdranch.android.bookz.*
 import java.util.*
 
 class HomeFragment : Fragment(), BookListFragment.Callbacks {
@@ -31,15 +29,25 @@ class HomeFragment : Fragment(), BookListFragment.Callbacks {
 
         return root
     }
-
-    override fun onBookSelected(bookId: UUID) {
-        Log.d("F1", "On Home Fragment")
-        val fragment = BookFragment.newInstance(bookId)
+    //override fun onBookSelected(bookId: UUID)
+    override fun onBookSelected(bookId: Book) {
+        val fragment = BookDetailFragment.newInstance(bookId)
         childFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
 
+    }
+
+    override fun onAddBookSelected() {
+        Log.d("F1", "On Home Fragment")
+        val fragment = BookFragment.newInstance()
+        Log.d("F1", "On Home Fragment after")
+        childFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

@@ -23,7 +23,7 @@ import android.util.Log
 import java.util.*
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
+class MainActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     var databaseReference: DatabaseReference? = null
     var database: FirebaseDatabase? = null
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
         ref.setValue(profilePicture)
     }
 
-    override fun onBookSelected(bookId: UUID) {
+    //override fun onBookSelected(bookId: UUID) {
         /*
         val fragment = BookFragment.newInstance(bookId)
         supportFragmentManager
@@ -117,6 +117,6 @@ class MainActivity : AppCompatActivity(), BookListFragment.Callbacks {
             .commit()
 
          */
-        Log.d("F1", "On Main")
-    }
+        //Log.d("F1", "On Main")
+    //}
 }
