@@ -41,7 +41,7 @@ class MessageChatActivity : AppCompatActivity() {
                 val user: Users? = p0.getValue(Users::class.java)
 
                 username_chat.text = user!!.getFirstName() + " " + user!!.getLastName()
-                Picasso.get().load(user.getProfilePicture()).into(profile_image_chat)
+                //Picasso.get().load(user.getProfilePicture()).into(profile_image_chat)
 
             }
 
@@ -141,6 +141,8 @@ class MessageChatActivity : AppCompatActivity() {
                     messageHashMap["messageId"] = messageId
 
                     ref.child("Chats").child(messageId!!).setValue(messageHashMap)
+
+                    loadingBar.dismiss()
                 }
             } 
 

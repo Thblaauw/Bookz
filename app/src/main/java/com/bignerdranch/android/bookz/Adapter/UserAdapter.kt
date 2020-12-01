@@ -1,11 +1,15 @@
 package com.bignerdranch.android.bookz.Adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.bookz.MessageChatActivity
 import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
 import com.bignerdranch.android.bookz.R.id.*
@@ -35,8 +39,28 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
         val user: Users = mUsers[i]
-        holder.userNameText.text = user!!.getFirstName()
+        holder.userNameText.text = user!!.getFirstName() + " " + user!!.getLastName()
         //Picasso.get().load(user.getProfilePicture()).placeholder(R.drawable.ic_baseline_account_circle_24).into(holder.profileImageView)
+
+        holder.itemView.setOnClickListener {
+            val options = arrayOf<CharSequence> (
+                "Send Message",
+                "Visit Profile"
+            )
+            val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+            builder.setItems(options, DialogInterface.OnClickListener { dialog, which ->
+                if (which == 0) {
+                    val intent = Intent(mContext, MessageChatActivity::class.java)
+                    intent.putExtra("visit_id", user.getUID())
+                    mContext.startActivity(intent)
+                }
+
+                if (which == 1) {
+
+                }
+            })
+            builder.show()
+        }
     }
 
     override fun getItemCount(): Int {
