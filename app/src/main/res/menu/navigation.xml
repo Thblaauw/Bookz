@@ -10,6 +10,11 @@
         android:id="@+id/navigation_messages"
         android:icon="@drawable/ic_baseline_message_24"
         android:title="@string/messagesNav" />
+
+    <item
+        android:id="@+id/navigation_users"
+        android:icon="@drawable/ic_baseline_people_alt_24"
+        android:title="@string/usersNav" />
     <!---Profile navigaton -->
     <item
         android:id="@+id/navigation_profile"
