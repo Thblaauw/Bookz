@@ -1,15 +1,15 @@
 package com.bignerdranch.android.bookz
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -25,41 +25,21 @@ private var etSchool: EditText?=null
 private var mDatabaseReference: DatabaseReference? = null
 private var mDatabase: FirebaseDatabase? = null
 private var mAuth: FirebaseAuth? = null
-private var db: Database? = null
-private val TAG = "CreateAccountFragment"
+
+private val TAG = "CreateAccountActivity"
 //global variables
 private var firstName: String? = null
 private var lastName: String? = null
 private var email: String? = null
 private var password: String? = null
 private var school:String? = null
-var context: Context? = null
-class CreateAccountFragment : Fragment() {
+class CreateAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_create_account)
+        initialise()
     }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_create_account, container, false)
-        etFirstName = view.findViewById<View>(R.id.et_first_name) as EditText
-        etLastName = view.findViewById<View>(R.id.et_last_name) as EditText
-        etEmail = view.findViewById<View>(R.id.et_email) as EditText
-        etPassword = view.findViewById<View>(R.id.et_password) as EditText
-        etSchool = view.findViewById<View>(R.id.et_school) as EditText
-        btnCreateAccount = view.findViewById<View>(R.id.btn_register) as Button
-        mProgressBar = ProgressDialog(activity)
 
-        db = Database()
-
-
-        btnCreateAccount!!.setOnClickListener { db!!.addUser(requireActivity(), User(etFirstName?.text.toString(),etLastName?.text.toString(),etEmail?.text.toString(),etPassword?.text.toString(),etSchool?.text.toString())) }
-        return view
-    }
-    /*
     private fun initialise() {
         etFirstName = findViewById<View>(R.id.et_first_name) as EditText
         etLastName = findViewById<View>(R.id.et_last_name) as EditText
@@ -86,11 +66,11 @@ class CreateAccountFragment : Fragment() {
             mProgressBar!!.setMessage("Registering User...")
             mProgressBar!!.show()
         } else {
-            Toast.makeText(activity, "Enter all details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
         }
         mAuth!!
             .createUserWithEmailAndPassword(email!!, password!!)
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener(this) { task ->
                 mProgressBar!!.hide()
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
@@ -108,7 +88,7 @@ class CreateAccountFragment : Fragment() {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
-                        activity, "Authentication failed.",
+                        this@CreateAccountActivity, "Authentication failed.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -118,28 +98,26 @@ class CreateAccountFragment : Fragment() {
     private fun verifyEmail() {
         val mUser = mAuth!!.currentUser;
         mUser!!.sendEmailVerification()
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(
-                        activity,
+                        this@CreateAccountActivity,
                         "Verification email sent to " + mUser.getEmail(),
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     Log.e(TAG, "sendEmailVerification", task.exception)
                     Toast.makeText(
-                        activity,
+                        this@CreateAccountActivity,
                         "Failed to send verification email.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
     }
-
-     */
     private fun updateUserInfoAndUI() {
         //start next activity
-        val intent = Intent(activity, MainActivity::class.java)
+        val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
