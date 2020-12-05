@@ -95,4 +95,35 @@ class Repo{
 
         return mutableData
     }
+    fun searchByTitle(title: String):LiveData<MutableList<Post>>{
+        val mutableData = MutableLiveData<MutableList<Post>>()
+        FirebaseDatabase.getInstance().getReference("Posts").orderByChild("bookTitle")
+            .startAt(title)
+            .endAt(title+ "\ufbff").addListenerForSingleValueEvent(object:   ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val listData = mutableListOf<Post>()
+                for(datas: DataSnapshot in snapshot.children) {
+                    val id = datas.child("postID").value.toString()
+                    val title = datas.child("bookTitle").value.toString()
+                    val author = datas.child("bookAuthor").value.toString()
+                    val price =datas.child("bookPrice").value.toString()
+                    val image = datas.child("bookImage").value.toString()
+                    val description = datas.child("bookDescription").value.toString()
+                    val ISBN = datas.child("bookISBN").value.toString()
+                    val condition = datas.child("bookCondition").value.toString().toBoolean()
+
+                    val book = Post(id,title,image,description,price,author,ISBN,condition)
+                    listData.add(book)
+                }
+                mutableData.value=listData
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        return mutableData
+    }
 }
