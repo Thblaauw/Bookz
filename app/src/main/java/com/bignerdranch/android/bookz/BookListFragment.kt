@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.ui.home.HomeFragment
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_post_list.view.*
+import kotlinx.android.synthetic.main.list_item_book.view.*
 
 private const val TAG = "BookListFragment"
 class BookListFragment : Fragment() {
@@ -169,9 +171,9 @@ private inner class BookAdapter(private val context: Context): RecyclerView.Adap
             itemView.setOnClickListener(this)
         }
         fun bindView(book: Post) {
-            //pic Glide.with(context).load(url).into
-            this.book = book
 
+            this.book = book
+            Glide.with(context).load(this.book.bookImage).into(itemView.circleImageView)
             titleTextView.text = this.book.bookTitle
             authorTextView.text = this.book.bookAuthor
             priceTextView.text = this.book.bookPrice
