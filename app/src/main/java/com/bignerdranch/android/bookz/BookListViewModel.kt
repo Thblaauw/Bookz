@@ -2,12 +2,33 @@ package com.bignerdranch.android.bookz
 
 import android.util.Log
 import android.widget.Toast
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import com.bignerdranch.android.bookz.Repo.Repo
+
+class BookListViewModel : ViewModel() {
+    private val repo = Repo()
+    fun fetchBooks(): LiveData<MutableList<Post>>{
+        val mutableData = MutableLiveData<MutableList<Post>>()
+        repo.getBook().observeForever{postList->
+            mutableData.value = postList
+
+        }
+
+        return mutableData
+    }
+    /*val books = mutableListOf<Book>()
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
 class BookListViewModel : ViewModel() {
     val books = mutableListOf<Book>()
+
 
     private val mutableSearchTerm = MutableLiveData<String>()
     init {
@@ -32,13 +53,8 @@ class BookListViewModel : ViewModel() {
 
     }
 
-    fun addBook(book: Book) {
-        //crimeRepository.addCrime(crime)
-        //add to the database
-    }
 
-    fun fetchBooks(query: String = "") {
-        //mutableSearchTerm.value = query
-        Log.d("ViewModel", query)
-    }
+
+     */
+
 }

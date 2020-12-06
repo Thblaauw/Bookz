@@ -22,6 +22,7 @@ class MessagesFragment : Fragment() {
         messagesViewModel =
             ViewModelProviders.of(this).get(MessagesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_messages, container, false)
+
         return root
     }
 }

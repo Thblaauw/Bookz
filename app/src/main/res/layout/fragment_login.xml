@@ -1,9 +1,7 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/login_page">
+    android:layout_height="match_parent">
     <EditText
         android:id="@+id/et_email"
         style="@style/viewCustom"
@@ -42,5 +40,4 @@
         android:text="@string/create_act"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
-
 </RelativeLayout>
