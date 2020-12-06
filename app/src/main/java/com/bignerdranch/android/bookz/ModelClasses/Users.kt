@@ -3,15 +3,14 @@ package com.bignerdranch.android.bookz.ModelClasses
 import com.google.firebase.database.DataSnapshot
 
 class Users {
-    private var search: String = ""
     private var uid: String = ""
     private var profilePicture: String = ""
     private var firstName: String = ""
     private var lastName: String = ""
+    private var search: String = ""
     private var schoolName: String = ""
 
     constructor()
-
 
     constructor(
         uid: String,
@@ -25,7 +24,7 @@ class Users {
         this.profilePicture = profilePicture
         this.firstName = firstName
         this.lastName = lastName
-        this.search = lastName
+        this.search = search
         this.schoolName = schoolName
     }
 
@@ -33,7 +32,7 @@ class Users {
         return search
     }
 
-    fun setSearch(uid: String) {
+    fun setSearch(search: String) {
         this.search = search
     }
 
