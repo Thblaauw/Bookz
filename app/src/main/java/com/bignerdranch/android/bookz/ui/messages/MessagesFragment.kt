@@ -22,10 +22,7 @@ class MessagesFragment : Fragment() {
         messagesViewModel =
             ViewModelProviders.of(this).get(MessagesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_messages, container, false)
-        val textView: TextView = root.findViewById(R.id.text_messages)
-        messagesViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
         return root
     }
 }

@@ -2,6 +2,7 @@ package com.bignerdranch.android.bookz
 
 import android.util.Log
 import android.widget.Toast
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -20,6 +21,14 @@ class BookListViewModel : ViewModel() {
         return mutableData
     }
     /*val books = mutableListOf<Book>()
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+
+class BookListViewModel : ViewModel() {
+    val books = mutableListOf<Book>()
+
 
     private val mutableSearchTerm = MutableLiveData<String>()
     init {
@@ -44,15 +53,8 @@ class BookListViewModel : ViewModel() {
 
     }
 
-    fun addBook(book: Book) {
-        //crimeRepository.addCrime(crime)
-        //add to the database
-    }
 
-    fun fetchBooks(query: String = "") {
-        //mutableSearchTerm.value = query
-        Log.d("ViewModel", query)
-    }
 
      */
+
 }

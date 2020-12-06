@@ -20,6 +20,7 @@ class BookDetailFragment : Fragment() {
 
     private lateinit var book: Post
 
+
     //edit text fields
     private lateinit var titleField: TextView
     private lateinit var authorField: TextView
@@ -34,7 +35,9 @@ class BookDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
+
         Log.d("F1", "book title: ${book.bookTitle}")
+
         // Eventually, load crime from database
     }
 
@@ -69,12 +72,15 @@ class BookDetailFragment : Fragment() {
         detailsField = view.findViewById(R.id.book_detail_details) as TextView
         detailsField.text = book.bookDescription
 
+
         submitButton = view.findViewById(R.id.contact_buyer_button) as Button
         submitButton.apply {
             text ="Contact this seller"
             isEnabled = true
         }
         conditionBox = view.findViewById(R.id.book_detail_condition) as CheckBox
+
+
     }
 
     override fun onStart() {
@@ -82,7 +88,9 @@ class BookDetailFragment : Fragment() {
     }
 
     companion object {
+
         fun newInstance(newBook: Post): BookDetailFragment {
+
 
             val args = Bundle().apply {
                 //putSerializable(ARG_BOOK_ID, book)
@@ -91,7 +99,9 @@ class BookDetailFragment : Fragment() {
                 //.apply{
                // arguments = args
             //}
+
             newBook.bookTitle?.let { Log.d("F1", it) }
+
             bf.book = newBook
             return bf
         }

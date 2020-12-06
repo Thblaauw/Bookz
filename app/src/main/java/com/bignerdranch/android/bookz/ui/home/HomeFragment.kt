@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bignerdranch.android.bookz.*
 
+import java.util.*
+
 
 class HomeFragment : Fragment(), BookListFragment.Callbacks {
 
@@ -30,7 +32,9 @@ class HomeFragment : Fragment(), BookListFragment.Callbacks {
         return root
     }
     //override fun onBookSelected(bookId: UUID)
+
     override fun onBookSelected(bookId: Post) {
+
         val fragment = BookDetailFragment.newInstance(bookId)
         childFragmentManager
             .beginTransaction()

@@ -17,7 +17,9 @@ private const val TAG = "BookFragment"
 private const val ARG_BOOK_ID = "book_id"
 class BookFragment : Fragment() {
 
+
     private lateinit var book: Post
+
 
     //edit text fields
     private lateinit var titleField: EditText
@@ -33,6 +35,8 @@ class BookFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         //val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
         //Log.d(TAG, "args bundle book ID: $bookId")
 // Eventually, load crime from database
@@ -46,11 +50,13 @@ class BookFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_book, container,
             false)
 
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         titleField = view.findViewById(R.id.book_title) as EditText
         authorField = view.findViewById(R.id.book_author) as EditText
         priceField = view.findViewById(R.id.book_price) as EditText
@@ -65,7 +71,9 @@ class BookFragment : Fragment() {
         }
 
         conditionBox = view.findViewById(R.id.book_condition) as CheckBox
+
     }
+
     override fun onStart() {
         super.onStart()
         val genericTextWatcher = object : TextWatcher{
@@ -83,11 +91,14 @@ class BookFragment : Fragment() {
                 before: Int,
                 count: Int
             ) {
+
                 book.bookTitle = sequence.toString()
+
             }
             override fun afterTextChanged(sequence: Editable?) {
                 // This one too
                 if(sequence.hashCode() == titleField.getText().hashCode())
+
                     book.bookTitle = sequence.toString()
                 if(sequence.hashCode() == authorField.getText().hashCode())
                     book.bookAuthor = sequence.toString()
@@ -97,6 +108,7 @@ class BookFragment : Fragment() {
                     book.bookISBN = sequence.toString()
                 if(sequence.hashCode() == detailsField.getText().hashCode())
                     book.bookDescription = sequence.toString()
+
             }
         }
         titleField.addTextChangedListener(genericTextWatcher)
@@ -107,7 +119,9 @@ class BookFragment : Fragment() {
 
         conditionBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
+
                 book.bookCondition = isChecked
+
             }
         }
     }

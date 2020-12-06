@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
@@ -9,6 +11,7 @@
     android:backgroundTint="#E6E6E6"
     android:padding="10dp"
     android:layout_marginTop="5dp"
+
     android:layout_marginBottom="5dp"
     android:orientation="horizontal">
 
@@ -51,3 +54,4 @@
          />
     </LinearLayout>
     </LinearLayout>
+

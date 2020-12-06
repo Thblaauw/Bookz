@@ -62,6 +62,9 @@ class ProfileFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userInfo.setFirstName(snapshot.child("firstName").value.toString())
                 userInfo.setLastName(snapshot.child("lastName").value.toString())
+
+                userInfo.setSearch(snapshot.child("search").value.toString())
+
                 userInfo.setSchoolName(snapshot.child("schoolName").value.toString())
                 FirebaseAuth.getInstance().uid?.let { userInfo.setUID(it) }
                 userInfo.setProfilePicture(snapshot.child("profilePicture").value.toString())

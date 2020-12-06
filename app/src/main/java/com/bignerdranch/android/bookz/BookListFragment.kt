@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 
+
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.ui.home.HomeFragment
+
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_post_list.view.*
 import kotlinx.android.synthetic.main.list_item_book.view.*
+
 
 private const val TAG = "BookListFragment"
 class BookListFragment : Fragment() {
@@ -25,7 +29,9 @@ class BookListFragment : Fragment() {
      */
     interface Callbacks {
         //fun onBookSelected(crimeId: UUID)
+
         fun onBookSelected(bookId: Post)
+
         fun onAddBookSelected()
     }
 
@@ -46,9 +52,12 @@ class BookListFragment : Fragment() {
    // }
 
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         parentFrag = this@BookListFragment.parentFragment as HomeFragment
+
         //callbacks = context as Callbacks?
     }
 
@@ -86,23 +95,24 @@ class BookListFragment : Fragment() {
         return when (item.itemId) {
             R.id.new_post -> {
 
-
                 //parentFrag?.onBookSelected(book.id)
                 parentFrag?.onAddBookSelected()
                 true
             }
             else -> return super.onOptionsItemSelected(item)
         }
-
          return true
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
+
     }
 /*
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -116,6 +126,7 @@ class BookListFragment : Fragment() {
 
         return view
     }
+
 
  */
     override fun onCreateView(
@@ -177,10 +188,12 @@ private inner class BookAdapter(private val context: Context): RecyclerView.Adap
             titleTextView.text = this.book.bookTitle
             authorTextView.text = this.book.bookAuthor
             priceTextView.text = this.book.bookPrice
+
         }
         override fun onClick(v: View) {
             parentFrag?.onBookSelected(book)        }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_item_book, parent, false)
@@ -202,10 +215,13 @@ private inner class BookAdapter(private val context: Context): RecyclerView.Adap
         }
     }
     }
+
     companion object {
         fun newInstance(): BookListFragment {
             return BookListFragment()
         }
     }
 
+
 }
+
