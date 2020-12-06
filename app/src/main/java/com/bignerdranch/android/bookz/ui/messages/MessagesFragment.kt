@@ -4,15 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.bookz.Adapter.UserAdapter
+import com.bignerdranch.android.bookz.ModelClasses.ChatList
+import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MessagesFragment : Fragment() {
 
     private lateinit var messagesViewModel: MessagesViewModel
+    private var userAdapter: UserAdapter? = null
+    private var mUsers: List<Users>? = null
+    private var usersChatList: List<ChatList>? = null
+    lateinit var recyclerview_messages: RecyclerView
+    private var firebaseUser: FirebaseUser? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +36,55 @@ class MessagesFragment : Fragment() {
         messagesViewModel =
             ViewModelProviders.of(this).get(MessagesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_messages, container, false)
+        recyclerview_messages = root.findViewById(R.id.recyclerview_messages)
+        recyclerview_messages.setHasFixedSize(true)
+        recyclerview_messages.layoutManager = LinearLayoutManager(context)
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        usersChatList = ArrayList()
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
+        ref!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                (usersChatList as ArrayList).clear()
+
+                for (dataSnapshot in p0.children) {
+                    (usersChatList as ArrayList).add(dataSnapshot.getValue(ChatList::class.java)!!)
+                }
+
+                retrieveMessageList()
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
         return root
     }
+
+    private fun retrieveMessageList(){
+        mUsers = ArrayList()
+        val ref = FirebaseDatabase.getInstance().reference.child("Users")
+        ref!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                (mUsers as ArrayList).clear()
+
+                for (dataSnapshot in p0.children) {
+                    val user = dataSnapshot.getValue(Users::class.java)
+                    for (eachChatList in usersChatList!!) {
+                        if (user!!.getUID().equals(eachChatList.getId())) {
+                            (mUsers as ArrayList).add(user!!)
+                        }
+                    }
+                }
+                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
+                recyclerview_messages.adapter = userAdapter
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
 }
+
