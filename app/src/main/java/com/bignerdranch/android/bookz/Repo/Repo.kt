@@ -66,35 +66,7 @@ class Repo{
         }
     }
 
-    fun getUser(): LiveData<MutableList<User>>{
-        val mutableData = MutableLiveData<MutableList<User>>()
-        FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(object:   ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val listData = mutableListOf<User>()
-                for(datas: DataSnapshot in snapshot.children) {
-                    val fn = datas.child("firstName").value.toString()
-                    val ln = datas.child("lastName").value.toString()
-                    val email = datas.child("email").value.toString()
-                    val pw =datas.child("password").value.toString()
-                    val sc =datas.child("school").value.toString()
-                    val pic =datas.child("profilePicture").value.toString()
-
-
-
-                    val user = User(fn,ln,email,pw,sc,pic)
-                    listData.add(user)
-                }
-                mutableData.value=listData
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        return mutableData
-    }
+   
     fun searchByTitle(title: String):LiveData<MutableList<Post>>{
         val mutableData = MutableLiveData<MutableList<Post>>()
         FirebaseDatabase.getInstance().getReference("Posts").orderByChild("bookTitle")
