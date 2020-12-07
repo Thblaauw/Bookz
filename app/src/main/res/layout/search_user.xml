@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Adapter.UserAdapter">
+    tools:context=".Adapter.UserAdapter"
+    android:layout_margin="5dp">
 <de.hdodenhof.circleimageview.CircleImageView
     android:id="@+id/profile_pic_bar"
     android:layout_width="60dp"
