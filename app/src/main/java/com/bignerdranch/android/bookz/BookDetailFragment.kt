@@ -18,7 +18,8 @@ private const val TAG = "BookFragment"
 private const val ARG_BOOK_ID = "book_id"
 class BookDetailFragment : Fragment() {
 
-    private lateinit var book: Book
+    private lateinit var book: Post
+
 
     //edit text fields
     private lateinit var titleField: TextView
@@ -34,7 +35,9 @@ class BookDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
-        Log.d("F1", "book title: ${book.title}")
+
+        Log.d("F1", "book title: ${book.bookTitle}")
+
         // Eventually, load crime from database
     }
 
@@ -47,20 +50,28 @@ class BookDetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_book_detail, container,
             false)
 
+        Log.d("F1", "On CreateView after")
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         titleField = view.findViewById(R.id.book_detail_title) as TextView
-        titleField.text = book.title
+        titleField.text = book.bookTitle
 
         authorField = view.findViewById(R.id.book_detail_author) as TextView
-        authorField.text = book.author
+        authorField.text = book.bookAuthor
 
         priceField = view.findViewById(R.id.book_detail_price) as TextView
-        priceField.text = book.price
+        priceField.text = book.bookPrice
 
         isbnField = view.findViewById(R.id.book_detail_ISBN) as TextView
-        isbnField.text = book.ISBN
+        isbnField.text = book.bookISBN
 
         detailsField = view.findViewById(R.id.book_detail_details) as TextView
-        detailsField.text = book.description
+        detailsField.text = book.bookDescription
+
 
         submitButton = view.findViewById(R.id.contact_buyer_button) as Button
         submitButton.apply {
@@ -68,8 +79,8 @@ class BookDetailFragment : Fragment() {
             isEnabled = true
         }
         conditionBox = view.findViewById(R.id.book_detail_condition) as CheckBox
-        Log.d("F1", "On CreateView after")
-        return view
+
+
     }
 
     override fun onStart() {
@@ -77,7 +88,9 @@ class BookDetailFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(newBook: Book): BookDetailFragment {
+
+        fun newInstance(newBook: Post): BookDetailFragment {
+
 
             val args = Bundle().apply {
                 //putSerializable(ARG_BOOK_ID, book)
@@ -86,7 +99,9 @@ class BookDetailFragment : Fragment() {
                 //.apply{
                // arguments = args
             //}
-            Log.d("F1", newBook.title)
+
+            newBook.bookTitle?.let { Log.d("F1", it) }
+
             bf.book = newBook
             return bf
         }
