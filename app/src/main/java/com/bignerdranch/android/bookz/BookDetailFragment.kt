@@ -1,5 +1,6 @@
 package com.bignerdranch.android.bookz
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,14 +13,17 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bignerdranch.android.bookz.Adapter.UserAdapter
+import com.bignerdranch.android.bookz.ModelClasses.Users
+import com.bignerdranch.android.bookz.Repo.Repo
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.auth.User
 import java.util.*
 
 private const val TAG = "BookFragment"
 private const val ARG_BOOK_ID = "book_id"
 class BookDetailFragment : Fragment() {
-
     private lateinit var book: Post
-
 
     //edit text fields
     private lateinit var titleField: TextView
@@ -46,11 +50,9 @@ class BookDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("F1", "On CreateView")
         val view = inflater.inflate(R.layout.fragment_book_detail, container,
             false)
 
-        Log.d("F1", "On CreateView after")
         return view
     }
 
@@ -72,7 +74,6 @@ class BookDetailFragment : Fragment() {
         detailsField = view.findViewById(R.id.book_detail_details) as TextView
         detailsField.text = book.bookDescription
 
-
         submitButton = view.findViewById(R.id.contact_buyer_button) as Button
         submitButton.apply {
             text ="Contact this seller"
@@ -80,7 +81,12 @@ class BookDetailFragment : Fragment() {
         }
         conditionBox = view.findViewById(R.id.book_detail_condition) as CheckBox
 
-
+        submitButton.setOnClickListener {view: View->
+            var ua: UserAdapter = UserAdapter(requireContext(), null, true)
+            Log.d("F2", "Starting Chat on Fragment")
+            Log.d("F2", "Owner Id: " + book.ownerID.toString())
+            ua.startChatting(book.ownerID!!)
+        }
     }
 
     override fun onStart() {

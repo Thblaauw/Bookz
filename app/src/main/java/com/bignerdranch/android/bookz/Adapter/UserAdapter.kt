@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,25 +20,29 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.firebase.ui.auth.data.model.User
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class UserAdapter(
     mContext: Context,
-    mUsers: List<Users>,
+    mUsers: List<Users>?,
     isChatCheck: Boolean
     ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
 
     private val mContext: Context
-    private val mUsers: List<Users>
+    private lateinit var mUsers: List<Users>
     private var isChatCheck: Boolean
     var lastMsg: String = ""
 
     init {
-        this.mUsers = mUsers
+        if (mUsers != null) {
+            this.mUsers = mUsers
+        }
         this.mContext = mContext
         this.isChatCheck = isChatCheck
     }
+
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.search_user, viewGroup, false)
@@ -82,6 +87,13 @@ class UserAdapter(
         return mUsers.size
     }
 
+    fun startChatting(id: String){
+        Log.d("F2", "Starting Chat on UserAdapter")
+        val intent = Intent(mContext, MessageChatActivity::class.java)
+        intent.putExtra("visit_id", id)
+        mContext.startActivity(intent)
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var userNameText: TextView
         var profileImageView: CircleImageView
@@ -102,16 +114,16 @@ class UserAdapter(
 
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                for(dataSnapshot in p0.children) {
+                for (dataSnapshot in p0.children) {
                     val chat: Chat? = dataSnapshot.getValue(Chat::class.java)
-                    if(firebaseUser!=null && chat!=null) {
-                        if(chat.getReceiver() == firebaseUser!!.uid && chat.getSender() == chatUserId || chat.getReceiver() == chatUserId && chat.getSender() == firebaseUser!!.uid ) {
+                    if (firebaseUser != null && chat != null) {
+                        if (chat.getReceiver() == firebaseUser!!.uid && chat.getSender() == chatUserId || chat.getReceiver() == chatUserId && chat.getSender() == firebaseUser!!.uid) {
                             lastMsg = chat.getMessage()!!
                         }
                     }
                 }
 
-                when(lastMsg) {
+                when (lastMsg) {
                     "defaultMsg" -> lastMessageText.text = "No Message"
                     "Attatchment: Image" -> lastMessageText.text = "Attatchment: Image"
                     else -> lastMessageText.text = lastMsg
@@ -123,7 +135,5 @@ class UserAdapter(
 
             }
         })
-
     }
-
 }

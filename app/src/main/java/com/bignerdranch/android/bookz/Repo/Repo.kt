@@ -8,13 +8,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.Post
-import com.bignerdranch.android.bookz.User
+import com.google.firebase.auth.FirebaseAuth
+//import com.bignerdranch.android.bookz.User
 
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
 class Repo{
     private var mDatabaseReference: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = FirebaseDatabase.getInstance()
+
     fun getBook(): LiveData<MutableList<Post>>{
         val mutableData = MutableLiveData<MutableList<Post>>()
         FirebaseDatabase.getInstance().getReference("Posts").addListenerForSingleValueEvent(object:   ValueEventListener {
@@ -29,8 +32,9 @@ class Repo{
                     val description = datas.child("bookDescription").value.toString()
                     val ISBN = datas.child("bookISBN").value.toString()
                     val condition = datas.child("bookCondition").value.toString().toBoolean()
+                    val ownerId = datas.child("ownerID").value.toString()
 
-                    val book = Post(id,title,image,description,price,author,ISBN,condition)
+                    val book = Post(id,title,image,description,price,author,ISBN,condition, ownerId)
                     listData.add(book)
                 }
                 mutableData.value=listData
@@ -46,55 +50,22 @@ class Repo{
     }
 
     fun addBook(context: Context, book: Post) {
-        if (!TextUtils.isEmpty(book.postID) && !TextUtils.isEmpty(book.bookTitle)
-            && !TextUtils.isEmpty(book.bookPrice) && !TextUtils.isEmpty(book.bookImage) && !TextUtils.isEmpty(
-                book.bookISBN
-            ) && !TextUtils.isEmpty(book.bookDescription) && !TextUtils.isEmpty(book.bookCondition.toString()) && !TextUtils.isEmpty(
-                book.bookAuthor
-            )
-        ) {
+        //add the ownerID in this line
+        var auth: FirebaseAuth = FirebaseAuth.getInstance()
+        var currentUser = auth.currentUser
+        book.ownerID = currentUser?.uid
 
-            mDatabaseReference = mDatabase?.getReference("Posts")
-            val bookID = mDatabaseReference!!.push().key
-            if (bookID != null) {
-                book.postID = bookID
-                mDatabaseReference!!.child(bookID).setValue(book).addOnCompleteListener {
-                    Toast.makeText(context, "Book saved successfully", Toast.LENGTH_LONG).show()
-
-                }
+        mDatabaseReference = mDatabase?.getReference("Posts")
+        val bookID = mDatabaseReference!!.push().key
+        if (bookID != null) {
+            book.postID = bookID
+            mDatabaseReference!!.child(bookID).setValue(book).addOnCompleteListener {
+                Toast.makeText(context, "Book saved successfully", Toast.LENGTH_LONG).show()
             }
         }
+
     }
-
-    fun getUser(): LiveData<MutableList<User>>{
-        val mutableData = MutableLiveData<MutableList<User>>()
-        FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(object:   ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val listData = mutableListOf<User>()
-                for(datas: DataSnapshot in snapshot.children) {
-                    val fn = datas.child("firstName").value.toString()
-                    val ln = datas.child("lastName").value.toString()
-                    val email = datas.child("email").value.toString()
-                    val pw =datas.child("password").value.toString()
-                    val sc =datas.child("school").value.toString()
-                    val pic =datas.child("profilePicture").value.toString()
-
-
-
-                    val user = User(fn,ln,email,pw,sc,pic)
-                    listData.add(user)
-                }
-                mutableData.value=listData
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        return mutableData
-    }
+   
     fun searchByTitle(title: String):LiveData<MutableList<Post>>{
         val mutableData = MutableLiveData<MutableList<Post>>()
         FirebaseDatabase.getInstance().getReference("Posts").orderByChild("bookTitle")
@@ -111,8 +82,9 @@ class Repo{
                     val description = datas.child("bookDescription").value.toString()
                     val ISBN = datas.child("bookISBN").value.toString()
                     val condition = datas.child("bookCondition").value.toString().toBoolean()
+                    val ownerId = datas.child("ownerID").value.toString()
 
-                    val book = Post(id,title,image,description,price,author,ISBN,condition)
+                    val book = Post(id,title,image,description,price,author,ISBN,condition, ownerId)
                     listData.add(book)
                 }
                 mutableData.value=listData

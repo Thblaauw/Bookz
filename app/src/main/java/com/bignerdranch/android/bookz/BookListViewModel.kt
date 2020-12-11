@@ -24,7 +24,6 @@ class BookListViewModel : ViewModel() {
         val mutableData = MutableLiveData<MutableList<Post>>()
         repo.searchByTitle(title).observeForever{postList->
             mutableData.value = postList
-
         }
 
         return mutableData

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.Adapter.UserAdapter
 import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
-import com.bignerdranch.android.bookz.ui.users.UsersViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
