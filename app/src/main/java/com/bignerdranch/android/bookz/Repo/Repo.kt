@@ -8,7 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.Post
-import com.bignerdranch.android.bookz.User
+import com.google.firebase.auth.FirebaseAuth
+//import com.bignerdranch.android.bookz.User
 
 import com.google.firebase.database.*
 
@@ -30,7 +31,7 @@ class Repo{
                     val ISBN = datas.child("bookISBN").value.toString()
                     val condition = datas.child("bookCondition").value.toString().toBoolean()
 
-                    val book = Post(id,title,image,description,price,author,ISBN,condition)
+                    val book = Post(id,title,image,description,price,author,ISBN,condition,null)
                     listData.add(book)
                 }
                 mutableData.value=listData
@@ -46,6 +47,7 @@ class Repo{
     }
 
     fun addBook(context: Context, book: Post) {
+        //add the ownerID in this line
         if (!TextUtils.isEmpty(book.postID) && !TextUtils.isEmpty(book.bookTitle)
             && !TextUtils.isEmpty(book.bookPrice) && !TextUtils.isEmpty(book.bookImage) && !TextUtils.isEmpty(
                 book.bookISBN
@@ -84,7 +86,7 @@ class Repo{
                     val ISBN = datas.child("bookISBN").value.toString()
                     val condition = datas.child("bookCondition").value.toString().toBoolean()
 
-                    val book = Post(id,title,image,description,price,author,ISBN,condition)
+                    val book = Post(id,title,image,description,price,author,ISBN,condition,null)
                     listData.add(book)
                 }
                 mutableData.value=listData

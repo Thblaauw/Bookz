@@ -1,5 +1,6 @@
 package com.bignerdranch.android.bookz
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,14 +13,16 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bignerdranch.android.bookz.Repo.Repo
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 private const val TAG = "BookFragment"
 private const val ARG_BOOK_ID = "book_id"
 class BookDetailFragment : Fragment() {
 
+    private var firebase: Repo? = null
     private lateinit var book: Post
-
 
     //edit text fields
     private lateinit var titleField: TextView
@@ -72,7 +75,6 @@ class BookDetailFragment : Fragment() {
         detailsField = view.findViewById(R.id.book_detail_details) as TextView
         detailsField.text = book.bookDescription
 
-
         submitButton = view.findViewById(R.id.contact_buyer_button) as Button
         submitButton.apply {
             text ="Contact this seller"
@@ -80,7 +82,9 @@ class BookDetailFragment : Fragment() {
         }
         conditionBox = view.findViewById(R.id.book_detail_condition) as CheckBox
 
-
+        submitButton.setOnClickListener {
+            //UserDatapter.startChat(book.ownerID)
+        }
     }
 
     override fun onStart() {

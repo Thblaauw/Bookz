@@ -11,13 +11,14 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.bignerdranch.android.bookz.Repo.Repo
 import java.util.*
 
 private const val TAG = "BookFragment"
 private const val ARG_BOOK_ID = "book_id"
 class BookFragment : Fragment() {
 
-
+    private var firebase: Repo? = null
     private lateinit var book: Post
 
 
@@ -70,6 +71,10 @@ class BookFragment : Fragment() {
             isEnabled = true
         }
 
+        submitButton.setOnClickListener {
+            firebase?.addBook(requireActivity(), book)
+        }
+
         conditionBox = view.findViewById(R.id.book_condition) as CheckBox
 
     }
@@ -119,7 +124,6 @@ class BookFragment : Fragment() {
 
         conditionBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
-
                 book.bookCondition = isChecked
 
             }
