@@ -79,11 +79,16 @@ class BookListFragment : Fragment() {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(queryText: String): Boolean {
                     Log.d(TAG, "QueryTextSubmit: $queryText")
-
+                    if(!queryText.isEmpty())
+                        filteredData(queryText)
+                    else
+                        observeData()
                     return true
                 }
                 override fun onQueryTextChange(queryText: String): Boolean {
                     Log.d(TAG, "QueryTextChange: $queryText")
+                    if(queryText.isEmpty())
+                        observeData()
                     return false
                 }
             })
