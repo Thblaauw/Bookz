@@ -37,17 +37,6 @@ class MessageChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message_chat)
 
-        /*val toolbar: Toolbar = findViewById(R.id.toolbar_message_chat)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.title = ""
-        supportActionBar!!.setDefaultDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this@MessageChatActivity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-        }*/
-
         intent = intent
         userIdVisit = intent.getStringExtra("visit_id").toString()
         firebaseUser = FirebaseAuth.getInstance().currentUser

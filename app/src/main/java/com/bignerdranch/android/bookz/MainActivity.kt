@@ -106,17 +106,4 @@ class MainActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Users/$uid/profilePicture")
         ref.setValue(profilePicture)
     }
-
-    //override fun onBookSelected(bookId: UUID) {
-        /*
-        val fragment = BookFragment.newInstance(bookId)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-
-         */
-        //Log.d("F1", "On Main")
-    //}
 }
