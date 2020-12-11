@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 class Repo{
     private var mDatabaseReference: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = FirebaseDatabase.getInstance()
+
     fun getBook(): LiveData<MutableList<Post>>{
         val mutableData = MutableLiveData<MutableList<Post>>()
         FirebaseDatabase.getInstance().getReference("Posts").addListenerForSingleValueEvent(object:   ValueEventListener {
@@ -31,8 +32,9 @@ class Repo{
                     val description = datas.child("bookDescription").value.toString()
                     val ISBN = datas.child("bookISBN").value.toString()
                     val condition = datas.child("bookCondition").value.toString().toBoolean()
+                    val ownerId = datas.child("ownerID").value.toString()
 
-                    val book = Post(id,title,image,description,price,author,ISBN,condition,null)
+                    val book = Post(id,title,image,description,price,author,ISBN,condition, ownerId)
                     listData.add(book)
                 }
                 mutableData.value=listData
@@ -63,7 +65,6 @@ class Repo{
         }
 
     }
-
    
     fun searchByTitle(title: String):LiveData<MutableList<Post>>{
         val mutableData = MutableLiveData<MutableList<Post>>()
@@ -81,8 +82,9 @@ class Repo{
                     val description = datas.child("bookDescription").value.toString()
                     val ISBN = datas.child("bookISBN").value.toString()
                     val condition = datas.child("bookCondition").value.toString().toBoolean()
+                    val ownerId = datas.child("ownerID").value.toString()
 
-                    val book = Post(id,title,image,description,price,author,ISBN,condition,null)
+                    val book = Post(id,title,image,description,price,author,ISBN,condition, ownerId)
                     listData.add(book)
                 }
                 mutableData.value=listData

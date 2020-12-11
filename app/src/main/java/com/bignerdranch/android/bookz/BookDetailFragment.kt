@@ -84,6 +84,7 @@ class BookDetailFragment : Fragment() {
         submitButton.setOnClickListener {view: View->
             var ua: UserAdapter = UserAdapter(requireContext(), null, true)
             Log.d("F2", "Starting Chat on Fragment")
+            Log.d("F2", "Owner Id: " + book.ownerID.toString())
             ua.startChatting(book.ownerID!!)
         }
     }
