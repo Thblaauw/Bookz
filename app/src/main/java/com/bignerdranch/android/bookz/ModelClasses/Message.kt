@@ -1,29 +1,21 @@
 package com.bignerdranch.android.bookz.ModelClasses
 
-class Chat {
-    private var sender: String = ""
+class Message {
     private var message: String = ""
+    private var sender: String = ""
     private var receiver: String = ""
+    private var messageId: String = ""
     private var seen = false
     private var url: String = ""
-    private var messageId: String = ""
 
     constructor()
     constructor(sender: String, message: String, receiver: String, seen: Boolean, url: String, messageId: String) {
-        this.sender = sender
         this.message = message
+        this.sender = sender
         this.receiver = receiver
         this.seen = seen
         this.url = url
         this.messageId = messageId
-    }
-
-    fun getSender(): String? {
-        return sender
-    }
-
-    fun setSender(sender: String?) {
-        this.sender = sender!!
     }
 
     fun getMessage(): String? {
@@ -34,12 +26,29 @@ class Chat {
         this.message = message!!
     }
 
+    fun getSender(): String? {
+        return sender
+    }
+
+    fun setSender(sender: String?) {
+        this.sender = sender!!
+    }
+
+
     fun getReceiver(): String? {
         return receiver
     }
 
     fun setReceiver(receiver: String?) {
         this.receiver = receiver!!
+    }
+
+    fun getMessageId(): String? {
+        return messageId
+    }
+
+    fun setMessageId(messageId: String?) {
+        this.messageId = messageId!!
     }
 
     fun isSeen(): Boolean {
@@ -58,12 +67,5 @@ class Chat {
         this.url = url!!
     }
 
-    fun getMessageId(): String? {
-        return messageId
-    }
-
-    fun setMessageId(messageId: String?) {
-        this.messageId = messageId!!
-    }
 
 }

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.bookz.Adapter.UserAdapter
-import com.bignerdranch.android.bookz.ModelClasses.ChatList
+import com.bignerdranch.android.bookz.ModelClasses.MessageList
 import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
 import com.google.firebase.auth.FirebaseAuth
@@ -23,8 +23,8 @@ class MessagesFragment : Fragment() {
 
     private lateinit var messagesViewModel: MessagesViewModel
     private var userAdapter: UserAdapter? = null
-    private var mUsers: List<Users>? = null
-    private var usersChatList: List<ChatList>? = null
+    private var users: List<Users>? = null
+    private var usersMessageList: List<MessageList>? = null
     lateinit var recyclerview_messages: RecyclerView
     private var firebaseUser: FirebaseUser? = null
 
@@ -40,20 +40,17 @@ class MessagesFragment : Fragment() {
         recyclerview_messages.setHasFixedSize(true)
         recyclerview_messages.layoutManager = LinearLayoutManager(context)
         firebaseUser = FirebaseAuth.getInstance().currentUser
-        usersChatList = ArrayList()
+        usersMessageList = ArrayList()
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                (usersChatList as ArrayList).clear()
-
+                (usersMessageList as ArrayList).clear()
                 for (dataSnapshot in p0.children) {
-                    (usersChatList as ArrayList).add(dataSnapshot.getValue(ChatList::class.java)!!)
+                    (usersMessageList as ArrayList).add(dataSnapshot.getValue(MessageList::class.java)!!)
                 }
-
-                retrieveMessageList()
+                getMessageList()
             }
-
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -61,26 +58,24 @@ class MessagesFragment : Fragment() {
         return root
     }
 
-    private fun retrieveMessageList(){
-        mUsers = ArrayList()
+    private fun getMessageList(){
+        users = ArrayList()
         val ref = FirebaseDatabase.getInstance().reference.child("Users")
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                (mUsers as ArrayList).clear()
-
+                (users as ArrayList).clear()
                 for (dataSnapshot in p0.children) {
                     val user = dataSnapshot.getValue(Users::class.java)
-                    for (eachChatList in usersChatList!!) {
+                    for (eachChatList in usersMessageList!!) {
                         if (user!!.getUID().equals(eachChatList.getId())) {
-                            (mUsers as ArrayList).add(user!!)
+                            (users as ArrayList).add(user!!)
                         }
                     }
                 }
-                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
+                userAdapter = UserAdapter(context!!, (users as ArrayList<Users>), true)
                 recyclerview_messages.adapter = userAdapter
 
             }
-
             override fun onCancelled(error: DatabaseError) {
 
             }

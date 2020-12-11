@@ -1,6 +1,6 @@
 package com.bignerdranch.android.bookz.ModelClasses
 
-class ChatList {
+class MessageList {
 
     private var id: String = ""
 

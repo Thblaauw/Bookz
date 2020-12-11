@@ -8,73 +8,71 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bignerdranch.android.bookz.ModelClasses.Chat
+import com.bignerdranch.android.bookz.ModelClasses.Message
 import com.bignerdranch.android.bookz.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ChatAdapter(
-    mContext: Context,
-    mChatList: List<Chat>,
+class MessageAdapter(
+    context: Context,
+    messageList: List<Message>,
     imageUrl: String
-    ): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+    ): RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
 
-    private val mContext: Context
-    private val mChatList: List<Chat>
+    private val context: Context
+    private val messageList: List<Message>
     private val imageUrl: String
-    var fireBaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     init {
-        this.mContext = mContext
-        this.mChatList = mChatList
+        this.context = context
+        this.messageList = messageList
         this.imageUrl = imageUrl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
         return if (position == 1) {
-            val view: View = LayoutInflater.from(mContext).inflate(com.bignerdranch.android.bookz.R.layout.item_right_message, parent, false)
+            val view: View = LayoutInflater.from(context).inflate(com.bignerdranch.android.bookz.R.layout.item_right_message, parent, false)
             ViewHolder(view)
         }
 
         else {
-            val view: View = LayoutInflater.from(mContext).inflate(com.bignerdranch.android.bookz.R.layout.item_left_message, parent, false)
+            val view: View = LayoutInflater.from(context).inflate(com.bignerdranch.android.bookz.R.layout.item_left_message, parent, false)
             ViewHolder(view)
         }
     }
 
     override fun getItemCount(): Int {
-        return mChatList.size
+        return messageList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val chat: Chat  = mChatList[position]
+        val message: Message  = messageList[position]
 
-        //Picasso.get().load(imageUrl).into(holder.profile_image_left)
-
-        if(chat.getMessage().equals("Attachment: Image") && !chat.getUrl().equals("")) {
-            if(chat.getSender().equals(fireBaseUser!!.uid)) {
+        if(message.getMessage().equals("Attachment: Image") && !message.getUrl().equals("")) {
+            if(message.getSender().equals(firebaseUser!!.uid)) {
                 holder.show_message!!.visibility = View.GONE
                 holder.imageview_right!!.visibility = View.VISIBLE
-                Picasso.get().load(chat.getUrl()).into(holder.imageview_right)
+                Picasso.get().load(message.getUrl()).into(holder.imageview_right)
             }
 
-            else if(!chat.getSender().equals(fireBaseUser!!.uid)) {
+            else if(!message.getSender().equals(firebaseUser!!.uid)) {
                 holder.show_message!!.visibility = View.GONE
                 holder.imageview_left!!.visibility = View.VISIBLE
-                Picasso.get().load(chat.getUrl()).into(holder.imageview_left)
+                Picasso.get().load(message.getUrl()).into(holder.imageview_left)
             }
         }
 
         else {
-            holder.show_message!!.text = chat.getMessage()
+            holder.show_message!!.text = message.getMessage()
         }
 
-        if(position == mChatList.size-1) {
-            if(chat.isSeen()) {
+        if(position == messageList.size-1) {
+            if(message.isSeen()) {
                 holder.message_seen!!.text = "Seen"
-                if(chat.getMessage().equals("Attachment: Image") && !chat.getUrl().equals("")) {
+                if(message.getMessage().equals("Attachment: Image") && !message.getUrl().equals("")) {
                     val lp: RelativeLayout.LayoutParams? = holder.message_seen!!.layoutParams as RelativeLayout.LayoutParams?
                     lp!!.setMargins(0,245,10,0)
                     holder.message_seen!!.layoutParams = lp
@@ -83,7 +81,7 @@ class ChatAdapter(
             }
             else {
                 holder.message_seen!!.text = "Sent"
-                if(chat.getMessage().equals("Attachment: Image") && !chat.getUrl().equals("")) {
+                if(message.getMessage().equals("Attachment: Image") && !message.getUrl().equals("")) {
                     val lp: RelativeLayout.LayoutParams? = holder.message_seen!!.layoutParams as RelativeLayout.LayoutParams?
                     lp!!.setMargins(0,245,10,0)
                     holder.message_seen!!.layoutParams = lp
@@ -117,11 +115,7 @@ class ChatAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-
-
-
-
-        return if (mChatList[position].getSender().equals(fireBaseUser!!.uid)) {
+        return if (messageList[position].getSender().equals(firebaseUser!!.uid)) {
             1
         }
         else {

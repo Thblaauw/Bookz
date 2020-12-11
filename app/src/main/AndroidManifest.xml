@@ -14,7 +14,7 @@
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MainActivity" />
 
-        <activity android:name=".MessageChatActivity" />
+        <activity android:name=".MessageActivity" />
 
         <activity android:name=".LoginActivity">
             <intent-filter>
