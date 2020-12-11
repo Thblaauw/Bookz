@@ -29,9 +29,7 @@ class BookListFragment : Fragment() {
      */
     interface Callbacks {
         //fun onBookSelected(crimeId: UUID)
-
         fun onBookSelected(bookId: Post)
-
         fun onAddBookSelected()
     }
 
@@ -79,11 +77,16 @@ class BookListFragment : Fragment() {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(queryText: String): Boolean {
                     Log.d(TAG, "QueryTextSubmit: $queryText")
-
+                    if(!queryText.isEmpty())
+                        searchBooks(queryText)
+                    else
+                        observeData()
                     return true
                 }
                 override fun onQueryTextChange(queryText: String): Boolean {
                     Log.d(TAG, "QueryTextChange: $queryText")
+                    if(queryText.isEmpty())
+                        observeData()
                     return false
                 }
             })
@@ -94,7 +97,6 @@ class BookListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.new_post -> {
-
                 //parentFrag?.onBookSelected(book.id)
                 parentFrag?.onAddBookSelected()
                 true
@@ -108,8 +110,6 @@ class BookListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-
     }
 
     override fun onCreateView(
@@ -117,9 +117,7 @@ class BookListFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
 ): View? {
-
         val view = inflater.inflate(R.layout.fragment_book_list, container, false)
-
         return view
 }
 
@@ -127,28 +125,22 @@ class BookListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.book_recycler_view) as RecyclerView
-
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-
-
         adapter = BookAdapter(this.requireActivity())
-
         recyclerView.adapter = adapter
         observeData()
-
     }
     fun observeData() {
         viewModel.fetchBooks()?.observe(this, Observer {
             adapter.setListData(it)
             adapter.notifyDataSetChanged()
-
         })
     }
-    fun filteredData(title: String){
-        viewModel.searchBooksByTitle(title)?.observe(this, Observer {
+
+    fun searchBooks(term: String){
+        viewModel.searchBooksByTitle(term)?.observe(this, Observer {
             adapter.setListData(it)
             adapter.notifyDataSetChanged()
-
         })
     }
 
