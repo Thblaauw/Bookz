@@ -18,9 +18,8 @@ private const val TAG = "BookFragment"
 private const val ARG_BOOK_ID = "book_id"
 class BookFragment : Fragment() {
 
-    private var firebase: Repo? = null
+    private var firebase: Repo = Repo()
     private lateinit var book: Post
-
 
     //edit text fields
     private lateinit var titleField: EditText
@@ -35,12 +34,10 @@ class BookFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
+        book = Post(null, null, null, null, null, null, null, null, null)
         //val bookId: UUID = arguments?.getSerializable(ARG_BOOK_ID) as UUID
         //Log.d(TAG, "args bundle book ID: $bookId")
-// Eventually, load crime from database
+        // Eventually, load crime from database
     }
 
     override fun onCreateView(
@@ -50,8 +47,6 @@ class BookFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book, container,
             false)
-
-
         return view
     }
 
@@ -64,15 +59,11 @@ class BookFragment : Fragment() {
         isbnField = view.findViewById(R.id.book_ISBN) as EditText
         detailsField = view.findViewById(R.id.book_detiails) as EditText
 
-
         submitButton = view.findViewById(R.id.submit_button) as Button
+
         submitButton.apply {
             text ="Submit"
             isEnabled = true
-        }
-
-        submitButton.setOnClickListener {
-            firebase?.addBook(requireActivity(), book)
         }
 
         conditionBox = view.findViewById(R.id.book_condition) as CheckBox
@@ -97,13 +88,10 @@ class BookFragment : Fragment() {
                 count: Int
             ) {
 
-                book.bookTitle = sequence.toString()
-
             }
             override fun afterTextChanged(sequence: Editable?) {
                 // This one too
                 if(sequence.hashCode() == titleField.getText().hashCode())
-
                     book.bookTitle = sequence.toString()
                 if(sequence.hashCode() == authorField.getText().hashCode())
                     book.bookAuthor = sequence.toString()
@@ -121,6 +109,11 @@ class BookFragment : Fragment() {
         priceField.addTextChangedListener(genericTextWatcher)
         isbnField.addTextChangedListener(genericTextWatcher)
         detailsField.addTextChangedListener(genericTextWatcher)
+
+
+        submitButton.setOnClickListener {view: View ->
+            firebase?.addBook(requireActivity(), book)
+        }
 
         conditionBox.apply {
             setOnCheckedChangeListener { _, isChecked ->

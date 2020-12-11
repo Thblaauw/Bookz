@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,24 +14,28 @@ import com.bignerdranch.android.bookz.MessageChatActivity
 import com.bignerdranch.android.bookz.ModelClasses.Users
 import com.bignerdranch.android.bookz.R
 import com.bignerdranch.android.bookz.R.id.*
+import com.firebase.ui.auth.data.model.User
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class UserAdapter(
     mContext: Context,
-    mUsers: List<Users>,
+    mUsers: List<Users>?,
     isChatCheck: Boolean
     ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
 
     private val mContext: Context
-    private val mUsers: List<Users>
+    private lateinit var mUsers: List<Users>
     private var isChatCheck: Boolean
 
     init {
-        this.mUsers = mUsers
+        if (mUsers != null) {
+            this.mUsers = mUsers
+        }
         this.mContext = mContext
         this.isChatCheck = isChatCheck
     }
+
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.search_user, viewGroup, false)
@@ -67,6 +72,13 @@ class UserAdapter(
         return mUsers.size
     }
 
+    fun startChatting(id: String){
+        Log.d("F2", "Starting Chat on UserAdapter")
+        val intent = Intent(mContext, MessageChatActivity::class.java)
+        intent.putExtra("visit_id", id)
+        mContext.startActivity(intent)
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var userNameText: TextView
         var profileImageView: CircleImageView
@@ -77,6 +89,10 @@ class UserAdapter(
             profileImageView = itemView.findViewById(R.id.profile_pic_bar)
             lastMessageText = itemView.findViewById(R.id.message_last)
         }
+
+    }
+
+    companion object{
 
     }
 

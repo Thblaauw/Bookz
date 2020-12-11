@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 //import com.bignerdranch.android.bookz.User
 
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
 class Repo{
     private var mDatabaseReference: DatabaseReference? = null
@@ -48,24 +49,19 @@ class Repo{
 
     fun addBook(context: Context, book: Post) {
         //add the ownerID in this line
-        if (!TextUtils.isEmpty(book.postID) && !TextUtils.isEmpty(book.bookTitle)
-            && !TextUtils.isEmpty(book.bookPrice) && !TextUtils.isEmpty(book.bookImage) && !TextUtils.isEmpty(
-                book.bookISBN
-            ) && !TextUtils.isEmpty(book.bookDescription) && !TextUtils.isEmpty(book.bookCondition.toString()) && !TextUtils.isEmpty(
-                book.bookAuthor
-            )
-        ) {
+        var auth: FirebaseAuth = FirebaseAuth.getInstance()
+        var currentUser = auth.currentUser
+        book.ownerID = currentUser?.uid
 
-            mDatabaseReference = mDatabase?.getReference("Posts")
-            val bookID = mDatabaseReference!!.push().key
-            if (bookID != null) {
-                book.postID = bookID
-                mDatabaseReference!!.child(bookID).setValue(book).addOnCompleteListener {
-                    Toast.makeText(context, "Book saved successfully", Toast.LENGTH_LONG).show()
-
-                }
+        mDatabaseReference = mDatabase?.getReference("Posts")
+        val bookID = mDatabaseReference!!.push().key
+        if (bookID != null) {
+            book.postID = bookID
+            mDatabaseReference!!.child(bookID).setValue(book).addOnCompleteListener {
+                Toast.makeText(context, "Book saved successfully", Toast.LENGTH_LONG).show()
             }
         }
+
     }
 
    
